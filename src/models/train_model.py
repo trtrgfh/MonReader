@@ -4,6 +4,48 @@ import torch.optim as optim
 import numpy as np
 from sklearn.metrics import f1_score
 import pickle
+from test_model import *
+
+def train_model(model, loss_fn, optimizer, num_epochs, model_name):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available
+    model.to(device)
+    
+    for epoch in range(num_epochs):
+        # Training
+        train_loss, train_acc = 0, 0
+        for images, labels in train_dataloader:
+            images = images.to(device)
+            labels = labels.to(device)
+    
+            # Forward pass
+            outputs = model(images)
+    
+            # Calculate loss
+            loss = loss_fn(outputs, labels)
+            train_loss += loss
+            train_acc += (torch.eq(labels, outputs.argmax(dim=1)).sum().item() / len(outputs)) * 100
+
+            # Optimizer zero grad
+            optimizer.zero_grad()
+        
+            # Loss backward
+            loss.backward()
+        
+            # Optimizer step
+            optimizer.step()
+    
+        train_loss /= len(train_dataloader)
+        train_acc /= len(train_dataloader)
+        
+        # Testing
+        test_loss, test_acc, f1, _ = test_model(model, loss_fn)
+    
+        print(f"Epoch: {epoch+1}")
+        print(f"Train_loss: {train_loss:.4f}, Test_loss: {test_loss:.4f}, Train_acc: {train_acc:.4f}, Test_acc: {test_acc:.4f}, f1: {f1:.4f}")
+
+    # Save trained model
+    with open(model_name, 'wb') as file:
+        pickle.dump(model, file)
 
 # Define the CNN model
 # "SAME" padding = ceil((f - 1) / 2)
@@ -27,59 +69,4 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 # Training loop
 num_epochs = 10
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")  # Use GPU if available
-model.to(device)
-
-for epoch in range(num_epochs):
-  # Training
-  train_loss = 0
-  for images, labels in train_dataloader:
-    images = images.to(device)
-    labels = labels.to(device)
-
-    # Forward pass
-    outputs = model(images)
-
-    # Calculate loss
-    loss = loss_fn(outputs, labels)
-    train_loss += loss
-
-    # Optimizer zero grad
-    optimizer.zero_grad()
-
-    # Loss backward
-    loss.backward()
-
-    # Optimizer step
-    optimizer.step()
-
-  train_loss /= len(train_dataloader)
-
-  # Testing
-  test_loss, test_acc = 0, 0
-  final_y_pred = []
-  model.eval()
-  with torch.inference_mode():
-    for images, labels in test_dataloader:
-      images = images.to(device)
-      labels = labels.to(device)
-
-      # Forward pass
-      outputs = model(images)
-
-      # Calculate loss
-      loss = loss_fn(outputs, labels)
-      test_loss += loss
-      test_acc += (torch.eq(labels, outputs.argmax(dim=1)).sum().item() / len(outputs)) * 100
-
-      final_y_pred.extend(outputs.argmax(dim=1).cpu().numpy())
-    test_loss /= len(test_dataloader)
-    test_acc /= len(test_dataloader)
-    f1 = f1_score(test_labels, final_y_pred)
-
-  print(f"Epoch: {epoch+1}")
-  print(f"Train_loss: {train_loss}, Test_loss: {test_loss}, Test_acc: {test_acc}, f1: {f1}")
-  
-# Save trained best model
-with open('cnn_model.pkl', 'wb') as file:
-    pickle.dump(model, file)
+train_model(model, loss_fn, optimizer, num_epochs, "cnn_model.pkl")
