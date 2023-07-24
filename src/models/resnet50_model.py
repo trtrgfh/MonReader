@@ -1,3 +1,6 @@
+from train_model import *
+from test_model import *
+
 class IdentityBlock(nn.Module):
   def __init__(self, in_channels, f, filters, stride=1):
     super(IdentityBlock, self).__init__()
