@@ -1,3 +1,4 @@
+from train_model import *
 def test_model(model, loss_fn):
     # Testing
     test_loss, test_acc = 0, 0
