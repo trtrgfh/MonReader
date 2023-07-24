@@ -1,4 +1,7 @@
 import torchvision
+from train_model import *
+from test_model import *
+
 weights = torchvision.models.MobileNet_V2_Weights.IMAGENET1K_V2
 mobile_model = torchvision.models.mobilenet_v2(weights=weights)
 torch.manual_seed(1234)
