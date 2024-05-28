@@ -1,6 +1,4 @@
-This project aims to develop a machine learning model capable of predicting if a page is being flipped using only a single image. The goal is to provide a solution that can automatically detect page flipping in real-time, which can be valuable in various applications such as document scanning, digital book reading, and image processing.
-
-<img src="https://github.com/trtrgfh/Customer_Analysis/assets/73056232/875e2134-6fe4-46ee-9ad0-7ea9c84207c0" width="600"/>
+<img src="https://github.com/trtrgfh/Page-Flip-Detection/assets/73056232/0c531186-5c1b-477d-8e78-931298e9c268" width="600"/>
 
 # Page Flip Detection
 
@@ -15,9 +13,21 @@ This project aims to develop a machine learning model capable of predicting if a
 - **Machine Learning:** pytorch, scikit-learn
   
 # Data
-Dataset used can be found at https://drive.google.com/file/d/1KDQBTbo5deKGCdVV_xIujscn5ImxW4dm/view?usp=sharing.
+Dataset used can be found [here](https://drive.google.com/file/d/1KDQBTbo5deKGCdVV_xIujscn5ImxW4dm/view?usp=sharing).
 
 # Results and evaluation
-<img src="https://github.com/trtrgfh/Customer_Analysis/assets/73056232/1aada7cf-aecd-4ee5-9851-c32c0f85998d" width="500"/>
-<img src="https://github.com/trtrgfh/Customer_Analysis/assets/73056232/cd28d5a4-5e50-4eac-a68c-87bcf8b08598" width="500"/>
-<img src="https://github.com/trtrgfh/Customer_Analysis/assets/73056232/1b105a63-867e-4a7c-b924-771e750bdfaa" width="500"/>
+Misclassified examples (true labels vs predicted labels): 
+<img src="https://github.com/trtrgfh/Page-Flip-Detection/assets/73056232/a736ef74-527b-40a5-b28b-4b8d6a4d8778" width="500"/>
+
+### CNN
+Train_loss: 0.3892, Train_acc: 93.8194, 
+Test_loss: 0.3983, Test_acc: 93.1626, Test_f1: 0.9333
+
+### ResNet
+Train_loss: 0.3938, Train_acc: 91.8472
+Test_loss: 0.3803, Test_acc: 93.1704, Test_f1: 0.9267
+
+### MobileNet
+Train_loss: 0.0381, Train_acc: 98.6944
+Test_loss: 0.06094, Test_acc: 98.5197, Test_f1: 0.9843
+
