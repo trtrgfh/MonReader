@@ -16,8 +16,8 @@ This project aims to develop a machine learning model capable of predicting if a
 Dataset used can be found [here](https://drive.google.com/file/d/1KDQBTbo5deKGCdVV_xIujscn5ImxW4dm/view?usp=sharing).
 
 # Results and evaluation
-Misclassified examples (true labels vs predicted labels): 
-<img src="https://github.com/trtrgfh/Page-Flip-Detection/assets/73056232/a736ef74-527b-40a5-b28b-4b8d6a4d8778" width="500"/>
+Misclassified examples (true labels vs predicted labels): \
+<img src="https://github.com/trtrgfh/Page-Flip-Detection/assets/73056232/a736ef74-527b-40a5-b28b-4b8d6a4d8778" width="700"/>
 
 ### CNN
 Train_loss: 0.3892, Train_acc: 93.8194, 
